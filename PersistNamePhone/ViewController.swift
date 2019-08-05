@@ -20,6 +20,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    //starting from here
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -28,86 +31,105 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //        let folder: String = path[0] as! String
         //        NSLog("Your NSUserDefaults are stored in this folder: %@/Preferences", folder)
         
-//        UserDefaults.standard.set(nameText.text, forKey: "name")
-//        UserDefaults.standard.set(numberText.text, forKey: "number")
+
         
-       // nameEntered = (UserDefaults.standard.value(forKey: "name") as? String)!
-        //numberEntered = (UserDefaults.standard.value(forKey: "number") as? String)!
-        
+        nameEntered = (UserDefaults.standard.value(forKey: "name") as? String)!
         numberEntered = (UserDefaults.standard.value(forKey: "number") as? String)!
         
-        
-        
-    }
-    
-    @IBAction func EnterNameAction(_ sender: Any) {
-        self.view.endEditing(true)
-    }
-    
-    
-    
-    
-    @IBAction func nameTextFieldEditingChanged(_ sender: UITextField) {
-        
-        if textFieldShouldReturn() {
-            print(textFieldShouldReturn())
-            print(sender.text!)
-           // UserDefaults.standard.set(nameText.text, forKey: "name")
-            if validate(text: sender.text!){
-                
-                SaveUpdateOutletButton.setTitle("Save", for: .normal)
-            }else {
-                SaveUpdateOutletButton.setTitle("Update", for: .normal)
-            }
+        if (nameEntered.isEmpty == false && numberEntered.isEmpty == false){
+             print("this is number entered count \(numberEntered.count)")
             
-        }
-        
-        else {
-            print(sender.text!)
-        }
-        
-        
-       
-    }
-    
-    
-    
-    @IBAction func numberTextFieldEditingChanged(_ sender: UITextField) {
-        print(sender.text!)
-        
-        if textFieldShouldReturn(){
-            if ((sender.text?.count)! > 10){
-                ErrorLabel.text = "please enter less than 10 digits"
-
-            } else if ((sender.text?.count)! < 10) {
-                ErrorLabel.text = "please enter atleast 10 digits"
-            }else {
-                ErrorLabel.text = "thanks for all 10 digits"
-            }
+            nameText.text = nameEntered
+             numberText.text = numberEntered
+            SaveUpdateOutletButton.setTitle("Update", for: .normal)
             
             
-        
-        
-    }
-    }
-    
-    func validate(text: String)-> Bool {
-        nameEntered = (UserDefaults.standard.value(forKey: "name") as? String)!
-        
-        print("this is name entered \(nameEntered)")
-        print("this is name text \(text)")
-        print("this is number entered \(numberEntered)")
-        
-        if(nameEntered == text){
             
-            print("already exist")
-            return false
             
         }else {
-            print("updated")
-            return true
+            
+            nameText.text = ""
+            numberText.text = ""
+            SaveUpdateOutletButton.setTitle("Save", for: .normal)
         }
+        
+        
+        
     }
+    
+//    @IBAction func EnterNameAction(_ sender: Any) {
+//        self.view.endEditing(true)
+//    }
+    
+    
+    
+    
+//    @IBAction func nameTextFieldEditingChanged(_ sender: UITextField) {
+//
+//        if textFieldShouldReturn() {
+//            print(textFieldShouldReturn())
+//            print(sender.text!)
+//           // UserDefaults.standard.set(nameText.text, forKey: "name")
+//            if validate(text: sender.text!){
+//
+//                SaveUpdateOutletButton.setTitle("Save", for: .normal)
+//            }else {
+//                SaveUpdateOutletButton.setTitle("Update", for: .normal)
+//            }
+//
+//        }
+//
+//        else {
+//            print(sender.text!)
+//        }
+//
+//
+//
+//    }
+    
+    
+    
+   @IBAction func numberTextFieldEditingChanged(_ sender: UITextField) {
+        print(sender.text!)
+
+        if textFieldShouldReturn(){
+            if ((sender.text?.count) == 10){
+                ErrorLabel.text = "thanks for all 10 digits"
+                SaveUpdateOutletButton.isEnabled = true
+                
+
+            }else if ((sender.text?.count) == 0) {
+                SaveUpdateOutletButton.isEnabled = true
+                ErrorLabel.text = "no number"
+               
+            }else {
+                ErrorLabel.text = "please enter 10 digits"
+                SaveUpdateOutletButton.isEnabled = false
+            }
+
+
+
+
+    }
+   }
+    
+//    func validate(text: String)-> Bool {
+//        nameEntered = (UserDefaults.standard.value(forKey: "name") as? String)!
+//
+//        print("this is name entered \(nameEntered)")
+//        print("this is name text \(text)")
+//        print("this is number entered \(numberEntered)")
+//
+//        if(nameEntered == text){
+//
+//            print("already exist")
+//            return false
+//
+//        }else {
+//            print("updated")
+//            return true
+//        }
+//    }
     
     
     
@@ -123,12 +145,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    
     @IBAction func updateSaveButton(_ sender: Any) {
-        
-
         
         UserDefaults.standard.set(nameText.text, forKey: "name")
         UserDefaults.standard.set(numberText.text, forKey: "number")
+        
+        
+//        if(numberText.text!.count == 10){
+//            print("this is number entered count \(numberEntered.count)")
+//
+//            // SaveUpdateOutletButton.isEnabled = true
+//            //SaveUpdateOutletButton.setTitle("Update", for: .normal)
+//            ErrorLabel.text = "Thanks for entering all the 10 digits"
+//        }else {
+//            SaveUpdateOutletButton.isEnabled = false
+//            print("please enter 10 digits")
+//        }
+
+        
+        
+        
         
         
         // print(numberText.text?.count as! Int)
